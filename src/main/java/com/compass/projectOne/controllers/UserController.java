@@ -4,6 +4,7 @@ import com.compass.projectOne.entities.User;
 import com.compass.projectOne.services.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,5 +23,10 @@ public class UserController {
         List<User> users = userService.findAll();
 
         return ResponseEntity.ok(users);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<User> findById(@PathVariable Long id){
+        return ResponseEntity.ok(userService.findById(id));
     }
 }

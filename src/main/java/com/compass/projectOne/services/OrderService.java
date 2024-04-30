@@ -19,7 +19,7 @@ public class OrderService {
     }
 
     public List<Order>  findAll(){
-        return userRepository.findAll();
+        return orderRepository.findAll();
     }
 
     public Order findById(Long id){

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/orders")
 public class OrderController {
 
     private OrderService orderService;
@@ -22,9 +22,9 @@ public class OrderController {
     }
     @GetMapping
     public ResponseEntity<List<Order>> findAll(){
-        List<Order> users = orderService.findAll();
+        List<Order> orders = orderService.findAll();
 
-        return ResponseEntity.ok(users);
+        return ResponseEntity.ok(orders);
     }
 
     @GetMapping("/{id}")

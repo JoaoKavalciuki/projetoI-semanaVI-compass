@@ -1,5 +1,6 @@
 package com.compass.projectOne.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -14,6 +15,7 @@ public class Order implements Serializable {
     private Long id;
     private Instant moment;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "clientId")
     private User client;

@@ -1,14 +1,8 @@
 package com.compass.projectOne.config;
 
-import com.compass.projectOne.entities.Category;
-import com.compass.projectOne.entities.Order;
-import com.compass.projectOne.entities.Product;
-import com.compass.projectOne.entities.User;
+import com.compass.projectOne.entities.*;
 import com.compass.projectOne.entities.enums.OrderStatus;
-import com.compass.projectOne.repositories.CategoryRepository;
-import com.compass.projectOne.repositories.OrderRepository;
-import com.compass.projectOne.repositories.ProductRepository;
-import com.compass.projectOne.repositories.UserRepository;
+import com.compass.projectOne.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
@@ -25,6 +19,9 @@ public class TestConfig implements CommandLineRunner {
     private OrderRepository orderRepository;
     private CategoryRepository categoryRepository;
     private ProductRepository productRepository;
+
+    @Autowired
+    private OrderItemRepository orderItemRepository;
 
     @Autowired
     public TestConfig(UserRepository userRepository, OrderRepository orderRepository, CategoryRepository categoryRepository,
@@ -54,15 +51,20 @@ public class TestConfig implements CommandLineRunner {
         Product product4 = new Product("Adidas Yeezy", "Adidas shoes designed by Kanye West", "", 800.00);
         Product product5 = new Product("Dish Washer", "Brastemp dish washer", "", 500.00);
 
-        userRepository.saveAll(Arrays.asList(user1, user2));
-        orderRepository.saveAll(Arrays.asList(order, order2, order3));
-        categoryRepository.saveAll(Arrays.asList(category, category2, category3));
+        OrderItem orderItem = new OrderItem(order, product, product.getPrice(), 2);
+        OrderItem orderItem2 = new OrderItem(order2, product3, product3.getPrice(), 1);
+        OrderItem orderItem3 = new OrderItem(order3, product5, product5.getPrice(), 2);
 
         product.getCategories().add(category2);
         product2.getCategories().add(category2);
         product3.getCategories().add(category2);
         product4.getCategories().add(category);
         product5.getCategories().addAll(Arrays.asList(category2, category3));
+
+        userRepository.saveAll(Arrays.asList(user1, user2));
+        orderRepository.saveAll(Arrays.asList(order, order2, order3));
+        categoryRepository.saveAll(Arrays.asList(category, category2, category3));
         productRepository.saveAll(Arrays.asList(product, product2, product3, product4, product5));
+        orderItemRepository.saveAll(Arrays.asList(orderItem, orderItem2, orderItem3));
     }
 }

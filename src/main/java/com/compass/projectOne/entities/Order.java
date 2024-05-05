@@ -1,8 +1,12 @@
 package com.compass.projectOne.entities;
 
 import com.compass.projectOne.entities.enums.OrderStatus;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import java.io.Serializable;
 import java.time.Instant;
@@ -20,9 +24,8 @@ public class Order implements Serializable {
 
     private Integer orderStatus;
 
-    @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "clientId")
+    @JoinColumn(name = "client_id")
     private User client;
 
     @OneToMany(mappedBy = "id.order")
@@ -71,6 +74,9 @@ public class Order implements Serializable {
         }
     }
 
+    public Set<OrderItem> getItems() {
+        return items;
+    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

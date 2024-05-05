@@ -62,6 +62,9 @@ public class TestConfig implements CommandLineRunner {
         product4.getCategories().add(category);
         product5.getCategories().addAll(Arrays.asList(category2, category3));
 
+        Payment payment = new Payment(Instant.parse("2024-05-02T12:57:00Z"), order);
+        order.setPayment(payment);
+
         userRepository.saveAll(Arrays.asList(user1, user2));
         orderRepository.saveAll(Arrays.asList(order, order2, order3));
         productRepository.saveAll(Arrays.asList(product, product2, product3, product4, product5));

@@ -44,6 +44,7 @@ public class TestConfig implements CommandLineRunner {
         Category category = new Category("Shoes");
         Category category2 = new Category("Electronic");
         Category category3 = new Category("Cleaning");
+        categoryRepository.saveAll(Arrays.asList(category, category2, category3));
 
         Product product = new Product("Ryzen 5", "AMD CPU", "", 150.00);
         Product product2 = new Product("Water cooler", "NZXT water cooler", "", 75.00);
@@ -63,7 +64,6 @@ public class TestConfig implements CommandLineRunner {
 
         userRepository.saveAll(Arrays.asList(user1, user2));
         orderRepository.saveAll(Arrays.asList(order, order2, order3));
-        categoryRepository.saveAll(Arrays.asList(category, category2, category3));
         productRepository.saveAll(Arrays.asList(product, product2, product3, product4, product5));
         orderItemRepository.saveAll(Arrays.asList(orderItem, orderItem2, orderItem3));
     }

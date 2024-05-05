@@ -3,10 +3,7 @@ package com.compass.projectOne.controllers;
 import com.compass.projectOne.entities.User;
 import com.compass.projectOne.services.UserService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,6 +20,12 @@ public class UserController {
         List<User> users = userService.findAll();
 
         return ResponseEntity.ok(users);
+    }
+
+    @PostMapping
+    public ResponseEntity<String> createUser(@RequestBody User user){
+        userService.createUser(user);
+        return ResponseEntity.ok("Usuário criado com sucesso");
     }
 
     @GetMapping("/{id}")

@@ -2,8 +2,11 @@ package com.compass.projectOne.services;
 
 import com.compass.projectOne.entities.User;
 import com.compass.projectOne.repositories.UserRepository;
+import com.compass.projectOne.services.exceptions.DatabaseException;
 import com.compass.projectOne.services.exceptions.RecordNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -34,7 +37,13 @@ public class UserService {
     }
 
     public void deleteId(Long id){
-        userRepository.deleteById(id);
+        try{
+            userRepository.deleteById(id);
+        } catch(EmptyResultDataAccessException exception){
+            throw new RecordNotFoundException(id);
+        } catch (DataIntegrityViolationException exception){
+            throw new DatabaseException(exception.getMessage());
+        }
     }
 
     public User updateUser(Long id, User user){

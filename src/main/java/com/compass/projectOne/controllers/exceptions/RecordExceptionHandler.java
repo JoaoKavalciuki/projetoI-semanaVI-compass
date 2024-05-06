@@ -1,5 +1,6 @@
 package com.compass.projectOne.controllers.exceptions;
 
+import com.compass.projectOne.services.exceptions.DatabaseException;
 import com.compass.projectOne.services.exceptions.RecordNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,14 @@ public class RecordExceptionHandler {
         String errorMessage = "Record not found";
 
         HttpStatus status = HttpStatus.NOT_FOUND;
+        StandardError error = new StandardError(Instant.now(), status.value(), errorMessage, exception.getMessage(), request.getRequestURI());
+        return ResponseEntity.status(status).body(error);
+    }
+    @ExceptionHandler(DatabaseException.class)
+    public ResponseEntity<StandardError> databaseException(DatabaseException exception, HttpServletRequest request){
+        String errorMessage = "Database error";
+
+        HttpStatus status = HttpStatus.BAD_REQUEST;
         StandardError error = new StandardError(Instant.now(), status.value(), errorMessage, exception.getMessage(), request.getRequestURI());
         return ResponseEntity.status(status).body(error);
     }

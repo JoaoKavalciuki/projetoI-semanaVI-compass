@@ -4,7 +4,9 @@ import com.compass.projectOne.entities.User;
 import com.compass.projectOne.services.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -23,9 +25,11 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<String> createUser(@RequestBody User user){
+    public ResponseEntity<?> createUser(@RequestBody User user){
         userService.createUser(user);
-        return ResponseEntity.ok("Usuário criado com sucesso");
+        URI uri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/{id}")
+                .buildAndExpand(user.getId()).toUri();
+        return ResponseEntity.created(uri).build();
     }
 
     @GetMapping("/{id}")

@@ -2,6 +2,7 @@ package com.compass.projectOne.services;
 
 import com.compass.projectOne.entities.User;
 import com.compass.projectOne.repositories.UserRepository;
+import com.compass.projectOne.services.exceptions.RecordNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +26,7 @@ public class UserService {
     public User findById(Long id){
         Optional<User> user = userRepository.findById(id);
 
-        return user.get();
+        return user.orElseThrow(() -> new RecordNotFoundException(id));
     }
 
     public void createUser(User user){

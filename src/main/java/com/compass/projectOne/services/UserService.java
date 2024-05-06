@@ -4,6 +4,7 @@ import com.compass.projectOne.entities.User;
 import com.compass.projectOne.repositories.UserRepository;
 import com.compass.projectOne.services.exceptions.DatabaseException;
 import com.compass.projectOne.services.exceptions.RecordNotFoundException;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -47,9 +48,14 @@ public class UserService {
     }
 
     public User updateUser(Long id, User user){
-        User target = userRepository.getReferenceById(id);
-        updateData(user, target);
-        return userRepository.save(target);
+        try{
+            User target = userRepository.getReferenceById(id);
+            updateData(user, target);
+            return userRepository.save(target);
+        } catch(EntityNotFoundException exception){
+            throw new RecordNotFoundException(id);
+        }
+
     }
 
     public void updateData(User source, User target){
